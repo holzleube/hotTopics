@@ -1,0 +1,276 @@
+\documentclass{semdoc}
+% Template: $Id: t01_txt.tex,v 1.7 2000/05/23 12:13:37 bless Exp $
+% -----------------------------------------------------------------------------
+% Seminarbeitrag
+% -----------------------------------------------------------------------------
+% Kommentare beginnen mit einem %-Zeichen
+\docbegin
+% --> Oberhalb der Linie bitte nichts ändern.
+% ---------------------------------------------------------------------------
+% \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ 
+% Stellen, an denen etwas geaendert werden soll, sind wie hier gekennzeichnet.
+% /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ 
+
+%
+% ---------------------------------------------------------------------------
+% \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ 
+% --> Bitte den Titel des Beitrages in die nächste Zeile eintragen:
+\title{Web Latenz im Transmission Control Protokoll}
+%
+% --> ... und den Namen des Autors:
+\author{Dane Leube}
+
+
+%
+\maketitle
+%
+% ---------------------------------------------------------------------------
+% \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ 
+% --> ... und jetzt kommt die Zusammenfassung:
+\begin{abstract}
+Dieses Paper behandelt das Thema Web Latenz. Die Grundlage ist eine Analyse von Google, wonach die Web Latenz sehr stark von Paket Losses beeinflusst wird. Diese Verluste führen zum Problem, wenn eine zuverlässige Verbindung via TCP aufgebaut, da die Pakete dann erneut gesendet werden. Diese Retransmission führt zu einer sehr großen Latenz wie eine Studie herausgefunden hat. In diesem Paper werden drei Lösungsansätze vorgestellt, die versuchen die Latenz zu reduzieren mit dem idealisierten Ziel einer Paket Recovery mit einem RTT. 
+\end{abstract}
+% /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ 
+% -----------------------------------------------------------------------------
+% ACHTUNG - ACHTUNG - ACHTUNG - ACHTUNG - ACHTUNG - ACHTUNG - ACHTUNG - ACHTUNG
+% -----------------------------------------------------------------------------
+% --> Im Text sollte \section der "höchste" Gliederungsbefehl sein,
+%     also bitte kein \chapter oder gar \part verwenden.
+%     Der Text kann aber mit \section{}, \subsection{}, \subsubsection{}
+%     untergliedert werden.
+%
+%     Bitte _neue_ Rechtschreibung verwenden!
+%
+%     Bitte nicht die Befehle \input oder \include verwenden, also den
+%     Text _nicht_ in mehrere Dateien aufteilen! 
+%
+%     \newpage oder manuelle Zeilenumbrüche (\\) sollten ebenfalls nicht 
+%     verwendet werden.
+%
+%     Bitte darauf achten, dass im _Quelltext_ ein Abschnitt nicht nur 
+%     in einer Zeile steht (das macht z.B. Word beim Exportieren ohne
+%     Zeilenumbruch), der Abschnitt sollte auch bei 80 Zeichen pro Zeile
+%     noch lesbar sein, d.h. Zeilenumbrüche im Quelltext bitte entsprechend
+%     einfügen.
+%
+%     Referenzen auf andere Abschnitte sind bitte mit \ref{...}, wie 
+%     anschliessend gezeigt, anzugeben und nicht etwa als Text wie
+%     "siehe auch Abschnitt 2.2"
+%
+%     Anführungszeichen sind nicht einfach so "Text" einzugeben, sondern so:
+%     "`Text"', andernfalls gibt es Fehler.
+%
+%     Das Zeichen ~ erzeugt einen Leerraum an dem aber nicht getrennt wird.
+%     Weitere Trennstellen:
+%     "- = zusätzliche Trennstelle
+%     "| = Vermeidung von Ligaturen und mögliche Trennung (bsp: Schaf"|fell)
+%     "~ = Bindestrich an dem keine Trennung erlaubt ist (bsp: bergauf und "~ab)
+%     "= = Bindestrich bei dem Worte vor und dahinter getrennt werden dürfen
+%     "" = Trennstelle ohne Erzeugung eines Trennstrichs (bsp: und/""oder)
+%
+%     Weiterer Hinweis: 
+%     KEIN Glossar erstellen! Abkürzungen sind im Text zu erklären!
+%     Der Text ist mit z.B. mit ispell auf Schreibfehler zu prüfen 
+%     (am besten aus dem Emacs heraus, 
+%     Menü: Edit -> Spell -> Select Deutsch8, dann Edit -> Spell -> Check Buffer)
+%
+% ---------------------------------------------------------------------------
+% \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ \/ 
+% --> ... und hier kommt der Text: 
+\section{Einleitung mit Problemstellung} % in die Klammern die Ueberschrift 
+\label{t01_Einleitung} % und ein Label
+% Das Label ist eine Marke, auf die man später mit \ref{labelname} verweisen kann.
+% BITTE ALLE LABELS MIT t01_ BEGINNEN.
+% Hier den Text eintragen:
+In unserer heutigen schnelllebigen Zeit muss vieles immer schneller werden. Besonderes Augenmerk hierbei liegt auf der schnellen Beschaffung von Informationen, Waren oder Dienstleistungen. Besonders Amazon hat dieses Prinzip verstanden. Sie versorgen ihre Kunden schnell mit Waren und Dienstleistungen. Besonders Amazon Prime, der schnelle Versanddienst ist auf dieser Position führend. Damit auch der Einkauf noch schneller vonstatten gehen kann, gibt es den sogenannten One-Klick Einkauf, bei dem man mit einem Klick die Kaufaktion abschließen kann. Amazon unternimmt sehr viel um diesen Prozess noch weiter zu perfektionieren. Der Nutzer von heute möchte nicht mehr lange seine Waren suchen sondern schnell zum Kaufabschluss kommen. Weiterhin möchte er möglichst viel in einer kurzen Zeit erledigen, damit er sich anderen wichtigen Aufgaben wittmen kann. Ein Problem was bei der steigenden Datenmenge heutzutage immer wieder auftritt ist die sogenannte Web Latenz. Diese beschreibt die Verzögerung beim Aufbau einer Website. Amazon schätzt, dass bereits bei einer Verzögerung von 100ms der Profit um 1 Prozent minimiert wird [Quelle]. Der Nutzer erwartet von einem Webshop, dass er schnell verfügbar ist und vor allem, dass er keine langen Wartezeiten hat, wenn er beispielsweise eine Suchabfrage an den Server schickt. Damit diese Anforderungen erfüllt werden können, erweitern die Betreiber ihre Backbones und Pops um ihre Kunden zu erreichen [Quelle einfügen]. \par
+
+Dieser Ansatz skaliert nicht unendlich, da es weitere Engpässe gibt. Ein weiterer Lösungsansatz kann die kritische Analyse des TCP Protokolls sein. Das TCP Protokoll ist der defakto Standard bei verbindungsorientieren und zuverlässigen Verbindungen im Web. Bei der Spezifizierung dieses Protokolls wurden solch große Durchflussraten, wie sie heutzutage zustande kommen nicht berücksichtigt. Google hat dieses Problem erkannt und genauer analysiert. Es wurden große Datenmengen mittels TCP Verbindung über das Web transferiert und ausgewertet. Die Auswertung zeigt, dass bei mindestens 10 Prozent der Übertragungen ein Paket Verlust passiert. Weiterhin wurde festgestellt, dass bei Übertragungen mit mindestens einem Verlust bis zu fünf Mal länger bei der Übertragung benötigen als welche ohne Verlust. Dieses Ergebnis zeigt, wie wichtig es ist, dass die Pakete bei einer Verbindung verlustfrei übertragen werden, damit die Web Latenz verringert werden kann. Der Faktor fünf ist sehr hoch, wenn man bedenkt, dass es sich nur um ein einzelnes Paket handelt welches verloren geht und somit neu übertragen werden muss. Die Studie hat weiterhin herausgefunden, dass 77 Prozent dieser Verluste immer am Anfang einer Verbindung auftreten, sogenannte Tail-Losses. \par
+
+Die Ergebnisse der Studie von Google zeigen die Wichtigkeit von verlustfreien TCP Übertragungen, damit die Web Latenz reduziert wird. An dieser Stelle setzt dieses Paper an. Das Ziel für die Optimierung ist es bei einem Paketverlust die Retransmission mit einem Versuch erfolgreich abzuschließen. Wenn also ein Paket verloren geht, dann soll dieses beim nächsten Senden ankommen. Dieses Ziel ist sehr hoch gefasst und kann wahrscheinlich nicht immer erreicht werden. Aus diesem Grund versuchen wir eine Näherung an dieses Idealziel zu erreichen. Die drei Ideen, die dieses Ziel erreichen sollen, haben unterschiedliche Ansätze. Die drei Ansätze sind aus dem Paper ">Reducing Web Latency: the Virtue of Gentle Aggression entnommen"<. Die Ansätze Reactive, Corrective und Proactive werden nach einem kurzen Grundlagenkapitel genauer erläutert und anschließend gegeneinander abgewägt. 
+
+
+\section{Grundlagen}
+In diesem Abschnitt geht es um eine kurze Einführung in die TCP Kommunikation, damit die Problemstellung klarer herausgearbeitet werden kann.
+
+\subsection{Transmission Control Protokoll}
+Das Transmission Control Protokoll (im folgenden nur noch TCP genannt) ist ein verbindungsorientiertes Transportprotokoll. Es sitzt in der OSI-Layer Architektur auf dem  4. Layer, dem Transportlayer. Die wichtigste Eigenschaft von TCP ist seine Zuverlässigkeit. Zur Erfüllung dieser Eigenschaft werden bei TCP Pakete, die auf dem Weg zum Empfänger verloren gehen erneut gesendet. Die zweite Eigenschaft, die Verbindungsorientierung von TCP baut eine Vollduplex Verbindung zwischen beiden Kommunikationspartnern auf, die ein Senden von Paketen in beide Richtungen zulässt. Im Folgenden soll der Ablauf einer TCP Verbindung dargestellt werden und die einzelnen Phasen erläutert werden, damit das Problem der Web Latenz im TCP Protokoll genauer erklärt werden kann.
+
+
+Bei TCP erfolgt ein Verbindungsaufbau über einen 3-Way-Handshake. Bei jedem Paket wird der TCP Header an das Datenpaket angehängt. Der komplette Header von TCP ist in Abbildung \ref{tcpHeaderImage} zu sehen. Für diese Arbeit relevant ist die sogenannte Sequenznummer, die beiden Flags ACK und SYN sowie das sogenannte CTRL Bit, dass angibt um welchen Typ von Paket es sich handelt. Beim Start einer neuen Verbindung sendet der Sender ein Paket mit einem gesetzten SYN Flag und einer zufällig generierten Sequenznummer.  Diese dient der eindeutigen Identifizierung eines Paketes und ist die Basis zum Erkennen eines verloren gegangen Paketes. Sie wird immer fortlaufend pro neuem Paket erhöht und bei jeder Übertragung mitgeschickt. Zur Bestätigung des erhaltenen Paketes antwortet der Empfänger mit einem gesetzten ACK und SYN Flag. Das ACK enthält die um eins inkrementierte Sequenznummer des ersten Kommunikationsteilnehmers.  Für den 3-Way-Handshake wird eine erneute Bestätigung vom Sender verschickt. In dieser Antwort ist die ACK die um eins inkrementierte Sequenznummer des erhaltenen Paketes vom Empfänger.
+
+\begin{figure}[htb] 
+\centerline{\includegraphics*[width=0.8\textwidth]{tcpHeader}} 
+\caption{Aufbau des TCP Headers Quelle:[TELE]} 
+\label{tcpHeaderImage}
+\end{figure}
+
+Die Latenz wird größer, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. 
+
+Dies ist bei verbindungslosen Protokollen wie UDP kein Problem, da keine Pakete nachgesendet werden. Somit beschränkt sich die Web
+
+Bei TCP jedoch birgt dies ein massives Problempotenzial. Da alle Daten vollständig auf der Empfängerseite ankommen müssen, schreibt das Protokoll ein erneutes Senden des verlorenen Pakets vor. Wenn ein Paket durch fehlerhaftes Routing verloren geht, ist die Wahrscheinlichkeit,
+
+Link: http://www.ieee802.org/3/ad\_hoc/bwa/BWA\_Report.pdf 
+
+Einführung in das genaue Problem. Hierbei ist die Einführung in das Thema Web Latenz sehr wichtig.
+
+Problem: Web Latenz reduziert den Umsatz auf einer Seite.
+Wichtige Ansätze: 
+-Erweitern der Backbones und PoPs
+-Besseres Routing
+
+Weiterer Ansatz ist multi-stage TCP Connections. 
+
+Aufzeigen der Grenzen dieser Möglichkeiten. Grenzen sind die TCP Implementierung. Limitierender Faktor, also das Hauptproblem ist die Round-Trip-Time (RTT)
+
+Warum? TCPs Mechanismus, wenn ein Packet verloren geht erhöht den RTT. Übertragungen mit Verlust benötigen 5x mehr Zeit als welche ohne. Fazit Verlust Recovery dominiert die Web Latenz.
+
+Lösungsansatz ist die schnellere Verlust Recovery mit dem Ziel maximal 1 RTT zu benötigen.
+
+3 Prinzipien werden vorgestellt.
+Reactive - Nur bei Verlust wird erneut gesendet
+Corrective - Überträgt so, dass man einfach korrigieren kann bei dem Verlust eines Packets ohne erneut zu übertragen.
+Proactive - Überträgt einfach redundant, also einfach alles doppelt.
+
+Alle drei Ansätze haben unterschiedliche Window Größen. Also die Zeit
+\section{TCP Erklärung und Problemstellung im TCP}
+Erkläre, wie TCP funktioniert und wo genau die Schwachstellen liegen. 
+
+\section{Zielsetzung - Zieldefinition 1RTT}
+
+\section{Lösungsvarianten}
+\subsection{Reactive}
+Lösungsansatz beschreiben
+\subsection{Corrective}
+Lösungsansatz beschreiben
+\subsection{Proactive}
+Lösungsansatz beschreiben
+
+\section{Lösungsbewertung anhand von Vor-und Nachteilen}
+
+\section{Fazit}
+%Und nun ein Bild:
+% Hinweis: der Text in der Abbildung sollte nicht größer als die
+% Schriftgröße des Fließtextes (11pt) sein und möglichst mit 
+% serifenlosen Font (Helvetica, Arial).
+% Einfach mit Dateiname (ohne Endung), Label, Bildunterschrift
+% \Abbildung{t01_b01}{t01_Bild1}{Ich bin die Bildunterschrift.}
+% oder spezifischer mit
+%\Abbildungf{!htb}{width= 0.8\textwidth}{t01_b01}{t01_Bild1}{Ich bin die Bildunterschrift.}
+% oder "von Hand" 
+% (z.B. mit Skalierung auf 80% Textbreite in horizontaler Richtung):
+%
+%\begin{figure}[htb] 
+%\centerline{\includegraphics*[width=0.8\textwidth]{dateiname}}} 
+%\caption{Dies ist die Bildunterschrift} 
+%\label{t01_Bild}
+%\end{figure}
+%
+% Für pdflatex werden die Bilddateien als PDF benötigt (z.B. mit epstopdf
+% oder Acrobat Distiller wandeln), deshalb keine Endung mit angeben!
+
+Umlaute gibt es auch: ä, ö, ü, Ä, Ö, Ü, ß. Alternativ kann man notfalls 
+auch "a,"o,"o,"A,"O,"U,"s eingeben. Die Umlaute werden nach ISO 8859-1
+codiert. Eingabemöglichkeiten im \texttt{emacs} wie folgt:
+\begin{enumerate}
+\item
+Wenn keine Umlaute auf der Tastatur vorhanden sind, kann man 
+z.B. mit folgender Tastenkombination (Tasten nacheinander drücken)
+ein ä erzeugen: \fbox{\parbox{1.05cm}{\tiny compose\\ character}}
+dann \fbox{\"{}} dann \fbox{a}.
+% Im Klartext: [compose character] ["] [a]
+\item
+Einfacher geht's jedoch mit dem \emph{iso-accents-mode} des
+\texttt{emacs}: Einfach \fbox{\"{}} gefolgt von \fbox{a}
+drücken.
+% Im Klartext: ["] [a]
+\end{enumerate}
+
+Nun einen Verweis auf eine Literaturstelle: \cite{t01_buch1}.
+Die Literatur ist in der BIB\TeX-Datei einzugeben (Endung \texttt{.bib}).
+Es wird sämtliche dort eingegebene Literatur auch aufgeführt
+(d.h. auch die Werke, die nicht referenziert wurden). Der Editor
+\texttt{emacs} unterstützt die Eingabe im BIB\TeX-Format (nach
+Laden einer Datei mit Endung \texttt{.bib}).
+
+
+Als nächstes präsentieren wir eine Aufzählung:
+\begin{itemize}
+\item Punkt1\\
+      Eine Formel (nicht numeriert): 
+      \[ \frac{1}{n} \cdot \sum_{i=1}^{n}{(\overline{x}-x_i)^2} \]
+\item Punkt2
+\item Punkt3
+\end{itemize}
+
+Man kann übrigens auch Bilder referenzieren: Bild~\ref{t01_Bild1} oder
+Unterabschnitte wie z.B. den nächsten Unterabschnitt~\ref{t01_Unterabschnitt}.
+URLs lassen sich so angeben: \urltext{http://www.uni-karlsruhe.de/} oder
+explizit \href{http://www.uni-karlsruhe.de/}{Universität Karlsruhe (TH)}
+(dann erscheint die URL nicht als zwangsweise im Text).
+
+\subsection{Unterabschnitt}
+\label{t01_Unterabschnitt}
+Dies ist ein Unterabschnitt. Mit \LaTeX\ kann man auch prima Tabellen (siehe
+Beispieltabelle~\ref{t01_tabelle}) erzeugen:
+\begin{table}[!htb] % das ! vor dem h heißt, dass LaTeX versucht, das "Gleitobjekt" 
+                    % wirklich hier zu plazieren
+\begin{center} % Zentrieren der Tabelle
+\begin{tabular}{|l||c|r|p{6.5cm}|}
+\hline
+\multicolumn{4}{|c|}{Beispieltabelle} \\
+\hline
+\hline
+Spalte 1       &    Spalte 2     &      Spalte 3     &        Spalte4 \\
+\hline
+linksbündig    & zentriert       & rechtsbündig      & 6.5cm breit, Fließtext
+                                                       ist möglich, d.h. der Text
+                                                       wird automatisch umgebrochen,
+                                                       allerdings im Blocksatz gesetzt.\\
+\hline
+               & \multicolumn{2}{c|}
+                 {Ein Eintrag über Spalte 2--3}      & Es gibt auch die Möglichkeit
+                                                       Flattersatz in Spalten einzusetzen.
+                                                       Das eignet sich besonders für kurze
+                                                       Spalten. Auch grau unterlegte 
+                                                       Tabellenzeilen oder Tabellen über
+                                                       mehrere Seiten sind möglich.\\
+\hline
+Man            &                 &                   &                          \\
+kann auch      & horizontale     & Linien            & einfach weglassen. \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Beispiel einer Tabelle\label{t01_tabelle}}
+\end{table}
+%%
+Ich bin der Beispieltext und habe eine Referenz auf Abschnitt~\ref{t01_Einleitung}. 
+Verschiedene Schriftgrößen wie {\small small}, {\footnotesize footnotesize} und
+Stile \emph{hervorgehobener Text}, \textit{kursiv}, \textsl{schräggestellt} (anders
+als kursiv), \textbf{Fettdruck} (sollte \emph{nicht} verwendet werden).
+Text in Anführungszeichen sieht so aus: "`korrekt"'.
+% Für Flattersatz in Tabellenspalten:
+% \newcolumntype{z}{>{\PBS{\raggedright\hspace{0pt}}}p{5cm}}
+% statt p{5cm} einfach z verwenden, z.B. \begin{tabular}{|l||c|r|z|}
+% Für graue Tabellenspalten (z.B. zentrierter Text):
+% \newcolumntype{g}{>{\columncolor[gray]{0.8}}c} % grau
+% \newcolumntype{G}{>{\columncolor[gray]{0.9}}c} % helleres grau
+% \begin{tabular}{|l||c|G|g|} oder auch \multicolumn{4}{|g|}{Eine ganze Zeile}
+% Aber Achtung: Im xdvi werden graue Zeilen nicht korrekt dargestellt, erst
+% im PostScript- oder PDF-Dokument bzw. Ghostview.
+%
+% /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ 
+% -----------------------------------------------------------------------------
+% Bitte keinen Text mehr unterhalb dieser Zeile eintragen!!
+% -----------------------------------------------------------------------------
+%
+% --> Üblicherweise wird nur die Literatur aufgelistet, die auch referenziert
+%     wird. Möchte man auch nichtreferenzierte Literatur einschließen, so
+%     kann man dies mit \nocite{<citelabel>} tun.
+\nocite{*}
+%     In die folgende Zeile sollte die benötigte Literaturdatenbankdatei
+%     eingetragen werden (im Normalfall nicht zu ändern):
+\bibliography{t01_txt}
+%
+\docend
+%%% end of document
