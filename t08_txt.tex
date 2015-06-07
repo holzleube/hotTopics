@@ -82,7 +82,7 @@ Dieses Paper behandelt das Thema Web Latenz. Die Grundlage ist eine Analyse von 
 % Das Label ist eine Marke, auf die man später mit \ref{labelname} verweisen kann.
 % BITTE ALLE LABELS MIT t01_ BEGINNEN.
 % Hier den Text eintragen:
-In unserer heutigen schnelllebigen Zeit muss vieles immer schneller werden. Besonderes Augenmerk hierbei liegt auf der schnellen Beschaffung von Informationen, Waren oder Dienstleistungen. Besonders Amazon hat dieses Prinzip verstanden. Sie versorgen ihre Kunden schnell mit Waren und Dienstleistungen. Besonders Amazon Prime, der schnelle Versanddienst ist auf dieser Position führend. Damit auch der Einkauf noch schneller vonstatten gehen kann, gibt es den sogenannten One-Klick Einkauf, bei dem man mit einem Klick die Kaufaktion abschließen kann. Amazon unternimmt sehr viel um diesen Prozess noch weiter zu perfektionieren. Der Nutzer von heute möchte nicht mehr lange seine Waren suchen sondern schnell zum Kaufabschluss kommen. Weiterhin möchte er möglichst viel in einer kurzen Zeit erledigen, damit er sich anderen wichtigen Aufgaben wittmen kann. Ein Problem was bei der steigenden Datenmenge heutzutage immer wieder auftritt ist die sogenannte Web Latenz. Diese beschreibt die Verzögerung beim Aufbau einer Website. Amazon schätzt, dass bereits bei einer Verzögerung von 100ms der Profit um 1 Prozent minimiert wird [Quelle]. Der Nutzer erwartet von einem Webshop, dass er schnell verfügbar ist und vor allem, dass er keine langen Wartezeiten hat, wenn er beispielsweise eine Suchabfrage an den Server schickt. Damit diese Anforderungen erfüllt werden können, erweitern die Betreiber ihre Backbones und Pops um ihre Kunden zu erreichen [Quelle einfügen]. \par
+Verzögerungen im Web kosten laut einer Studie von Amazon pro Verzögerung von 100ms ca. ein Prozent des Profits \cite{t01_beethoven}. Somit ist das Thema Web Latenz ein sehr aktuelles Thema, womit sich jeder Anbieter eines Online-Shops auseinander setzen muss. Der Nutzer erwartet von einem Webshop, dass er schnell verfügbar ist und vor allem, dass er keine langen Wartezeiten hat, wenn er beispielsweise eine Suchabfrage an den Server schickt. Damit diese Anforderungen erfüllt werden können, erweitern die Betreiber ihre Backbones und Pops um ihre Kunden zu erreichen [Quelle einfügen]. \par
 
 Dieser Ansatz skaliert nicht unendlich, da es weitere Engpässe gibt. Ein weiterer Lösungsansatz kann die kritische Analyse des TCP Protokolls sein. Das TCP Protokoll ist der defakto Standard bei verbindungsorientieren und zuverlässigen Verbindungen im Web. Bei der Spezifizierung dieses Protokolls wurden solch große Durchflussraten, wie sie heutzutage zustande kommen nicht berücksichtigt. Google hat dieses Problem erkannt und genauer analysiert. Es wurden große Datenmengen mittels TCP Verbindung über das Web transferiert und ausgewertet. Die Auswertung zeigt, dass bei mindestens 10 Prozent der Übertragungen ein Paket Verlust passiert. Weiterhin wurde festgestellt, dass bei Übertragungen mit mindestens einem Verlust bis zu fünf Mal länger bei der Übertragung benötigen als welche ohne Verlust. Dieses Ergebnis zeigt, wie wichtig es ist, dass die Pakete bei einer Verbindung verlustfrei übertragen werden, damit die Web Latenz verringert werden kann. Der Faktor fünf ist sehr hoch, wenn man bedenkt, dass es sich nur um ein einzelnes Paket handelt welches verloren geht und somit neu übertragen werden muss. Die Studie hat weiterhin herausgefunden, dass 77 Prozent dieser Verluste immer am Anfang einer Verbindung auftreten, sogenannte Tail-Losses. \par
 
@@ -96,49 +96,27 @@ In diesem Abschnitt geht es um eine kurze Einführung in die TCP Kommunikation, d
 Das Transmission Control Protokoll (im folgenden nur noch TCP genannt) ist ein verbindungsorientiertes Transportprotokoll. Es sitzt in der OSI-Layer Architektur auf dem  4. Layer, dem Transportlayer. Die wichtigste Eigenschaft von TCP ist seine Zuverlässigkeit. Zur Erfüllung dieser Eigenschaft werden bei TCP Pakete, die auf dem Weg zum Empfänger verloren gehen erneut gesendet. Die zweite Eigenschaft, die Verbindungsorientierung von TCP baut eine Vollduplex Verbindung zwischen beiden Kommunikationspartnern auf, die ein Senden von Paketen in beide Richtungen zulässt. Im Folgenden soll der Ablauf einer TCP Verbindung dargestellt werden und die einzelnen Phasen erläutert werden, damit das Problem der Web Latenz im TCP Protokoll genauer erklärt werden kann.
 
 
-Bei TCP erfolgt ein Verbindungsaufbau über einen 3-Way-Handshake. Bei jedem Paket wird der TCP Header an das Datenpaket angehängt. Der komplette Header von TCP ist in Abbildung \ref{tcpHeaderImage} zu sehen. Für diese Arbeit relevant ist die sogenannte Sequenznummer, die beiden Flags ACK und SYN sowie das sogenannte CTRL Bit, dass angibt um welchen Typ von Paket es sich handelt. Beim Start einer neuen Verbindung sendet der Sender ein Paket mit einem gesetzten SYN Flag und einer zufällig generierten Sequenznummer.  Diese dient der eindeutigen Identifizierung eines Paketes und ist die Basis zum Erkennen eines verloren gegangen Paketes. Sie wird immer fortlaufend pro neuem Paket erhöht und bei jeder Übertragung mitgeschickt. Zur Bestätigung des erhaltenen Paketes antwortet der Empfänger mit einem gesetzten ACK und SYN Flag. Das ACK enthält die um eins inkrementierte Sequenznummer des ersten Kommunikationsteilnehmers.  Für den 3-Way-Handshake wird eine erneute Bestätigung vom Sender verschickt. Die ACK ist die um eins inkrementierte Sequenznummer des vorherigen Paketes vom Empfänger. Nachdem das ACK beim Empfänger angekommen ist, beginnt die Datenübertragung. Diese wird 
+Bei TCP erfolgt ein Verbindungsaufbau über einen 3-Way-Handshake. Bei jedem Paket wird der TCP Header an das Datenpaket angehängt. Der komplette Header von TCP ist in Abbildung \ref{tcpHeaderImage} zu sehen. Für diese Arbeit relevant ist die sogenannte Sequenznummer, die beiden Flags ACK und SYN sowie das sogenannte CTRL Bit, dass angibt um welchen Typ von Paket es sich handelt. Beim Start einer neuen Verbindung sendet der Sender ein Paket mit einem gesetzten SYN Flag und einer zufällig generierten Sequenznummer.  Diese dient der eindeutigen Identifizierung eines Paketes und ist die Basis zum Erkennen eines verloren gegangen Paketes. Sie wird immer fortlaufend pro neuem Paket erhöht und bei jeder Übertragung mitgeschickt. Zur Bestätigung des erhaltenen Paketes antwortet der Empfänger mit einem gesetzten ACK und SYN Flag. Das ACK enthält die um eins inkrementierte Sequenznummer des ersten Kommunikationsteilnehmers.  Für den 3-Way-Handshake wird eine erneute Bestätigung vom Sender verschickt. Die ACK ist die um eins inkrementierte Sequenznummer des vorherigen Paketes vom Empfänger. Nachdem das ACK beim Empfänger angekommen ist, beginnt die Datenübertragung. Somit ist der Verbindungsaufbau von TCP abgeschlossen. Im Folgenden können Datenpakete übermittelt werden. Wichtig hierbei ist der sogenannte Slow-Start. Damit es nicht zu Stauungen und überflüssigen Paketverlusten kommt, wird bei einer Datenübertragung nie sofort das komplette Fenster übertragen. Es wird sich langsam an das Maximum, was die MTU hergeben kann angenähert. Dieser langsame Aufbau hat den Vorteil, dass die Leitungen weniger überlastet und somit schnell abgebrochen werden kann, falls die Verbindung nicht stabil genug sein sollte. Bei großen Datenmengen kann dies jedoch zu einem Problem führen, da die Geschwindigkeit beim Übertragen der Daten deutlich reduziert ist. Aus diesem Grund muss man beim Einsatz des Slow-Starts Mechanismus immer die konkrete Problemstellung im Auge haben.\par
+
+Die Zuverlässigkeitseigenschaft von TCP ist für dieses Paper von einer sehr großen Bedeutung. Die Zuverlässigkeit wird in TCP umgesetzt, indem eine erneute Übertragung des Paketes durchgeführt wird, sobald ein Paket auf dem Weg zum Empfänger verloren geht. Anhand der Sequenznummer wird ein Paketverlust identifiziert. Auf der Senderseite startet ein Timer, sobald das Paket losgeschickt wurde. Wenn der Timer abgelaufen ist und kein ACK Paket vom Empfänger erhalten wurde, wird das Paket erneut gesendet. Die Optimierung dieses Retransmission Timeouts (RTT) ist ein wichtiger Prozess bei der Optimierung von TCP.
 
 \begin{figure}[htb] 
-\centerline{\includegraphics*[width=0.8\textwidth]{tcpHeader}} 
+\centerline{\includegraphics*[width=0.8\textwidth]{t08_tcpHeader.png}} 
 \caption{Aufbau des TCP Headers Quelle:[TELE]} 
 \label{tcpHeaderImage}
 \end{figure}
 
-Die Latenz wird größer, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. 
 
-Dies ist bei verbindungslosen Protokollen wie UDP kein Problem, da keine Pakete nachgesendet werden. Somit beschränkt sich die Web
 
-Bei TCP jedoch birgt dies ein massives Problempotenzial. Da alle Daten vollständig auf der Empfängerseite ankommen müssen, schreibt das Protokoll ein erneutes Senden des verlorenen Pakets vor. Wenn ein Paket durch fehlerhaftes Routing verloren geht, ist die Wahrscheinlichkeit,
+\section{Googles Analyse}
+Nachdem die TCP Mechanismen erklärt wurden, ist die Frage nach der konkreten Problemstellung zum Thema Web Latenz zu klären. Grundlage der Analyse ist ein Forschungsergebnis von Google, wonach die Web Latenz deutlich ansteigt, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. Dies ist soweit nichts neues. Interessant an der Studie ist zum einen die Menge der Daten, die erhoben wurde und zum Anderen die Erkenntnis, dass bei vielen Paketverlusten ein exponentieller Anstieg der Web Latenz zu beobachten ist. In Abbildung \ref ist ein Balkendiagramm dargestellt, was diesen Sachverhalt verdeutlicht. Man sieht, dass bereits bei einem Paketverlust die Weblatenz um den Faktor zehn zunimmt. Weiterhin ist interessant zu sehen, dass man sehr nahe an der idealen RTT ist, wenn man keinen Paketverlust hat. Dadurch, dass bei verbindungslosen Protokollen wie UDP keine erneute Übertragung der Pakete stattfindet, begrenzt sich das Problem mit den Retransmissions auf Protokolle, die auf Zuverlässigkeit gebaut sind. Für unseren Ansatz ist das TCP Protokoll interessant, welches im vorigen Abschnitt erläutert wurde. Damit die Web Latenz im TCP Protokoll verringert werden kann ist eine Optimierung beim Retransmission Algorithmus von TCP zu suchen. \par
 
-Link: http://www.ieee802.org/3/ad\_hoc/bwa/BWA\_Report.pdf 
-
-Einführung in das genaue Problem. Hierbei ist die Einführung in das Thema Web Latenz sehr wichtig.
-
-Problem: Web Latenz reduziert den Umsatz auf einer Seite.
-Wichtige Ansätze: 
--Erweitern der Backbones und PoPs
--Besseres Routing
-
-Weiterer Ansatz ist multi-stage TCP Connections. 
-
-Aufzeigen der Grenzen dieser Möglichkeiten. Grenzen sind die TCP Implementierung. Limitierender Faktor, also das Hauptproblem ist die Round-Trip-Time (RTT)
-
-Warum? TCPs Mechanismus, wenn ein Packet verloren geht erhöht den RTT. Übertragungen mit Verlust benötigen 5x mehr Zeit als welche ohne. Fazit Verlust Recovery dominiert die Web Latenz.
-
-Lösungsansatz ist die schnellere Verlust Recovery mit dem Ziel maximal 1 RTT zu benötigen.
-
-3 Prinzipien werden vorgestellt.
-Reactive - Nur bei Verlust wird erneut gesendet
-Corrective - Überträgt so, dass man einfach korrigieren kann bei dem Verlust eines Packets ohne erneut zu übertragen.
-Proactive - Überträgt einfach redundant, also einfach alles doppelt.
-
-Alle drei Ansätze haben unterschiedliche Window Größen. Also die Zeit
-\section{TCP Erklärung und Problemstellung im TCP}
-Erkläre, wie TCP funktioniert und wo genau die Schwachstellen liegen. 
+Weitere Ergebnisse der Messung von Google zeigen, dass es 
 
 \section{Zielsetzung - Zieldefinition 1RTT}
 
 \section{Lösungsvarianten}
+Nachdem unser Ziel definiert wurde, kümmern wir uns um die Wege, wie wir das Ziel Paket-Recovery innerhalb einer RTT. Hierzu wurden im Paper \cite{} die drei Ansätze \textit{Reactive}, \textit{Corrective} und \textit{Proactive} vorgestellt. Der \textit{Reactive} Ansatz sendet das letzte Paket in einem neuen Window. E
 \subsection{Reactive}
 Lösungsansatz beschreiben
 \subsection{Corrective}
@@ -270,7 +248,7 @@ Text in Anführungszeichen sieht so aus: "`korrekt"'.
 \nocite{*}
 %     In die folgende Zeile sollte die benötigte Literaturdatenbankdatei
 %     eingetragen werden (im Normalfall nicht zu ändern):
-\bibliography{t01_txt}
+\bibliography{t08_txt}
 %
 \docend
 %%% end of document
