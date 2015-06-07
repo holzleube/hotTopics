@@ -106,17 +106,26 @@ Die Zuverlässigkeitseigenschaft von TCP ist für dieses Paper von einer sehr groß
 \label{tcpHeaderImage}
 \end{figure}
 
+\subsection{Fehlerkorrigierende Codes}
+Kurze Erläuterung der fehlercorrigenden Codes, damit der Corrective Ansatz verstanden werden kann.
 
 
 \section{Googles Analyse}
-Nachdem die TCP Mechanismen erklärt wurden, ist die Frage nach der konkreten Problemstellung zum Thema Web Latenz zu klären. Grundlage der Analyse ist ein Forschungsergebnis von Google, wonach die Web Latenz deutlich ansteigt, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. Dies ist soweit nichts neues. Interessant an der Studie ist zum Einen die Menge der Daten, die erhoben wurde und zum Anderen die Erkenntnis, dass bei vielen Paketverlusten ein exponentieller Anstieg der Web Latenz zu beobachten ist. In Abbildung \ref ist ein Balkendiagramm dargestellt, was diesen Sachverhalt verdeutlicht. Man sieht, dass bereits bei einem Paketverlust die Weblatenz um den Faktor zehn zunimmt. Weiterhin ist interessant zu sehen, dass man sehr nahe an der idealen RTT ist, wenn man keinen Paketverlust hat. Dadurch, dass bei verbindungslosen Protokollen wie UDP keine erneute Übertragung der Pakete stattfindet, begrenzt sich das Problem mit den Retransmissions auf Protokolle, die auf Zuverlässigkeit gebaut sind. Für unseren Ansatz ist das TCP Protokoll interessant, welches im vorigen Abschnitt erläutert wurde. Damit die Web Latenz im TCP Protokoll verringert werden kann ist eine Optimierung beim Retransmission Algorithmus von TCP zu suchen. \par
+Nachdem die TCP Mechanismen erklärt wurden, ist die Frage nach der konkreten Problemstellung zum Thema Web Latenz zu klären. Grundlage der Analyse ist ein Forschungsergebnis von Google, wonach die Web Latenz deutlich ansteigt, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. Dies ist soweit nichts neues. Interessant an der Studie ist zum Einen die Menge der Daten, die erhoben wurde und zum Anderen die Erkenntnis, dass bei vielen Paketverlusten ein exponentieller Anstieg der Web Latenz zu beobachten ist. In Abbildung \ref{googleImage} ist ein Balkendiagramm dargestellt, was diesen Sachverhalt verdeutlicht. Man sieht, dass bereits bei einem Paketverlust die Weblatenz um den Faktor zehn zunimmt. Weiterhin ist interessant zu sehen, dass man sehr nahe an der idealen RTT ist, wenn man keinen Paketverlust hat. Dadurch, dass bei verbindungslosen Protokollen wie UDP keine erneute Übertragung der Pakete stattfindet, begrenzt sich das Problem mit den Retransmissions auf Protokolle, die auf Zuverlässigkeit gebaut sind. Für unseren Ansatz ist das TCP Protokoll interessant, welches im vorigen Abschnitt erläutert wurde. Damit die Web Latenz im TCP Protokoll verringert werden kann ist eine Optimierung beim Retransmission Algorithmus von TCP zu suchen. \par
 
 Weitere Ergebnisse der Messung von Google zeigen, dass die meisten Verluste in der Start-Phase vorkommen. Also nachdem der 3-Way-Handshake zum Verbindungsaufbau durchgeführt wurde und der Slow-Start mit den ersten Datenpaketen durchgeführt wird. Sobald die Verbindung einmal stabil steht und schon eine gewisse Menge an Daten durchgeflossen sind, treten laut Studie weniger Paketverluste auf. Aus dieser Erkenntnis folgt, dass die Übertragung von kleineren Datenmengen kritischer zu begutachten ist als große Datenströme.  Weiterhin wurde beobachtet, dass 77 Prozent der Retransmission Probleme aufgrund von zu geringen RTO Zeiten zustande kommen \cite{t08_RTO}. Somit muss bei der späteren Analyse auch auf das Retransmission Timeout geachtet werden. Bzw. die RTO beim Lösungsentwurf herangezogen werden um eine Optimierung zu erhalten.
 
+\begin{figure}[htb] 
+\centerline{\includegraphics*[width=0.8\textwidth]{t08_google.png}} 
+\caption{Googles Auswertung der Paketverluste und deren Konzequenz für die Web Latenz:\cite{t08_WEB}} 
+\label{googleImage}
+\end{figure}
 \section{Zielsetzung - Zieldefinition 1RTT}
 
+Zielsetzung des Papers erläutern
 \section{Lösungsvarianten}
 Nachdem unser Ziel definiert wurde, kümmern wir uns um die Wege, wie wir das Ziel Paket-Recovery innerhalb einer RTT. Hierzu wurden im Paper \cite{} die drei Ansätze \textit{Reactive}, \textit{Corrective} und \textit{Proactive} vorgestellt. Der \textit{Reactive} beugt dem Problem des nicht erhaltenen ACKs vor indem es mehrere ACK Pakete zum Empfänger schickt. Somit ist die Wahrscheinlichkeit höher, dass der Empfänger eines dieser Pakete erhält und damit bestätigen kann. Der Corrective Ansatz versendet direkt mehrere Pakete. Durch diese Redundanz soll sichergestellt werden, dass die Pakete bei Verlust im Notfall beim Empfänger aus den vorhandenen Informationen wiederhergestellt werden. Die Proactive Lösung geht den krassesten Weg und versendet zu 100 Prozent redundant seine Daten. Somit wird das Paket doppelt aufgebläht. Wie die drei Ansätze im Detail funktionieren, wird in den folgenden Abschnitten behandelt.
+
 \subsection{Reactive}
 Lösungsansatz beschreiben
 \subsection{Corrective}
