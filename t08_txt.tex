@@ -82,11 +82,11 @@ Dieses Paper behandelt das Thema Web Latenz. Die Grundlage ist eine Analyse von 
 % Das Label ist eine Marke, auf die man später mit \ref{labelname} verweisen kann.
 % BITTE ALLE LABELS MIT t01_ BEGINNEN.
 % Hier den Text eintragen:
-Verzögerungen im Web kosten laut einer Studie von Amazon pro Verzögerung von 100ms ca. ein Prozent des Profits \cite{t01_beethoven}. Somit ist das Thema Web Latenz ein sehr aktuelles Thema, womit sich jeder Anbieter eines Online-Shops auseinander setzen muss. Der Nutzer erwartet von einem Webshop, dass er schnell verfügbar ist und vor allem, dass er keine langen Wartezeiten hat, wenn er beispielsweise eine Suchabfrage an den Server schickt. Damit diese Anforderungen erfüllt werden können, erweitern die Betreiber ihre Backbones und Pops um ihre Kunden zu erreichen [Quelle einfügen]. \par
+Verzögerungen im Web kosten laut einer Studie von Amazon pro Verzögerung von 100ms ca. ein Prozent des Profits \footnote{Quelle: http://sites.google.com/site/glinden/Home/StanfordDataMining.2006-11-28.ppt, 2006}. Somit ist das Thema Web Latenz ein sehr aktuelles Thema, womit sich jeder Anbieter eines Online-Shops auseinander setzen muss. Der Nutzer erwartet von einem Webshop, dass er schnell verfügbar ist und vor allem, dass er keine langen Wartezeiten hat, wenn er beispielsweise eine Abfrage an den Server schickt. Der einfachste Ansatz der Provider ist die Erhöhung der Backbone Hardware und der Pop´s \cite{t08_WEB}\par
 
 Dieser Ansatz skaliert nicht unendlich, da es weitere Engpässe gibt. Ein weiterer Lösungsansatz kann die kritische Analyse des TCP Protokolls sein. Das TCP Protokoll ist der defakto Standard bei verbindungsorientieren und zuverlässigen Verbindungen im Web. Bei der Spezifizierung dieses Protokolls wurden solch große Durchflussraten, wie sie heutzutage zustande kommen nicht berücksichtigt. Google hat dieses Problem erkannt und genauer analysiert. Es wurden große Datenmengen mittels TCP Verbindung über das Web transferiert und ausgewertet. Die Auswertung zeigt, dass bei mindestens 10 Prozent der Übertragungen ein Paket Verlust passiert. Weiterhin wurde festgestellt, dass bei Übertragungen mit mindestens einem Verlust bis zu fünf Mal länger bei der Übertragung benötigen als welche ohne Verlust. Dieses Ergebnis zeigt, wie wichtig es ist, dass die Pakete bei einer Verbindung verlustfrei übertragen werden, damit die Web Latenz verringert werden kann. Der Faktor fünf ist sehr hoch, wenn man bedenkt, dass es sich nur um ein einzelnes Paket handelt welches verloren geht und somit neu übertragen werden muss. Die Studie hat weiterhin herausgefunden, dass 77 Prozent dieser Verluste immer am Anfang einer Verbindung auftreten, sogenannte Tail-Losses. \par
 
-Die Ergebnisse der Studie von Google zeigen die Wichtigkeit von verlustfreien TCP Übertragungen, damit die Web Latenz reduziert wird. An dieser Stelle setzt dieses Paper an. Das Ziel für die Optimierung ist es bei einem Paketverlust die Retransmission mit einem Versuch erfolgreich abzuschließen. Wenn also ein Paket verloren geht, dann soll dieses beim nächsten Senden ankommen. Dieses Ziel ist sehr hoch gefasst und kann wahrscheinlich nicht immer erreicht werden. Aus diesem Grund versuchen wir eine Näherung an dieses Idealziel zu erreichen. Die drei Ideen, die dieses Ziel erreichen sollen, haben unterschiedliche Ansätze. Die drei Ansätze sind aus dem Paper ">Reducing Web Latency: the Virtue of Gentle Aggression entnommen"<. Die Ansätze Reactive, Corrective und Proactive werden nach einem kurzen Grundlagenkapitel genauer erläutert und anschließend gegeneinander abgewägt. 
+Die Ergebnisse der Studie von Google zeigen die Wichtigkeit von verlustfreien TCP Übertragungen, damit die Web Latenz reduziert wird. An dieser Stelle setzt dieses Paper an. Das Ziel für die Optimierung ist es bei einem Paketverlust die Retransmission mit einem Versuch erfolgreich abzuschließen. Wenn also ein Paket verloren geht, dann soll dieses beim nächsten Senden ankommen. Dieses Ziel ist sehr hoch gefasst und kann wahrscheinlich nicht immer erreicht werden. Aus diesem Grund versuchen wir eine Näherung an dieses Idealziel zu erreichen. Die drei Ideen, die dieses Ziel erreichen sollen, haben unterschiedliche Ansätze. Die drei Ansätze sind aus dem Paper \textit{Reducing Web Latency: the Virtue of Gentle Aggression entnommen}. Die Ansätze Reactive, Corrective und Proactive werden nach einem kurzen Grundlagenkapitel genauer erläutert und anschließend gegeneinander abgewägt. 
 
 
 \section{Grundlagen}
@@ -109,14 +109,14 @@ Die Zuverlässigkeitseigenschaft von TCP ist für dieses Paper von einer sehr groß
 
 
 \section{Googles Analyse}
-Nachdem die TCP Mechanismen erklärt wurden, ist die Frage nach der konkreten Problemstellung zum Thema Web Latenz zu klären. Grundlage der Analyse ist ein Forschungsergebnis von Google, wonach die Web Latenz deutlich ansteigt, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. Dies ist soweit nichts neues. Interessant an der Studie ist zum einen die Menge der Daten, die erhoben wurde und zum Anderen die Erkenntnis, dass bei vielen Paketverlusten ein exponentieller Anstieg der Web Latenz zu beobachten ist. In Abbildung \ref ist ein Balkendiagramm dargestellt, was diesen Sachverhalt verdeutlicht. Man sieht, dass bereits bei einem Paketverlust die Weblatenz um den Faktor zehn zunimmt. Weiterhin ist interessant zu sehen, dass man sehr nahe an der idealen RTT ist, wenn man keinen Paketverlust hat. Dadurch, dass bei verbindungslosen Protokollen wie UDP keine erneute Übertragung der Pakete stattfindet, begrenzt sich das Problem mit den Retransmissions auf Protokolle, die auf Zuverlässigkeit gebaut sind. Für unseren Ansatz ist das TCP Protokoll interessant, welches im vorigen Abschnitt erläutert wurde. Damit die Web Latenz im TCP Protokoll verringert werden kann ist eine Optimierung beim Retransmission Algorithmus von TCP zu suchen. \par
+Nachdem die TCP Mechanismen erklärt wurden, ist die Frage nach der konkreten Problemstellung zum Thema Web Latenz zu klären. Grundlage der Analyse ist ein Forschungsergebnis von Google, wonach die Web Latenz deutlich ansteigt, je mehr Pakete auf dem Weg zum Empfänger verloren gehen. Dies ist soweit nichts neues. Interessant an der Studie ist zum Einen die Menge der Daten, die erhoben wurde und zum Anderen die Erkenntnis, dass bei vielen Paketverlusten ein exponentieller Anstieg der Web Latenz zu beobachten ist. In Abbildung \ref ist ein Balkendiagramm dargestellt, was diesen Sachverhalt verdeutlicht. Man sieht, dass bereits bei einem Paketverlust die Weblatenz um den Faktor zehn zunimmt. Weiterhin ist interessant zu sehen, dass man sehr nahe an der idealen RTT ist, wenn man keinen Paketverlust hat. Dadurch, dass bei verbindungslosen Protokollen wie UDP keine erneute Übertragung der Pakete stattfindet, begrenzt sich das Problem mit den Retransmissions auf Protokolle, die auf Zuverlässigkeit gebaut sind. Für unseren Ansatz ist das TCP Protokoll interessant, welches im vorigen Abschnitt erläutert wurde. Damit die Web Latenz im TCP Protokoll verringert werden kann ist eine Optimierung beim Retransmission Algorithmus von TCP zu suchen. \par
 
-Weitere Ergebnisse der Messung von Google zeigen, dass es 
+Weitere Ergebnisse der Messung von Google zeigen, dass die meisten Verluste in der Start-Phase vorkommen. Also nachdem der 3-Way-Handshake zum Verbindungsaufbau durchgeführt wurde und der Slow-Start mit den ersten Datenpaketen durchgeführt wird. Sobald die Verbindung einmal stabil steht und schon eine gewisse Menge an Daten durchgeflossen sind, treten laut Studie weniger Paketverluste auf. Aus dieser Erkenntnis folgt, dass die Übertragung von kleineren Datenmengen kritischer zu begutachten ist als große Datenströme.  Weiterhin wurde beobachtet, dass 77 Prozent der Retransmission Probleme aufgrund von zu geringen RTO Zeiten zustande kommen \cite{t08_RTO}. Somit muss bei der späteren Analyse auch auf das Retransmission Timeout geachtet werden. Bzw. die RTO beim Lösungsentwurf herangezogen werden um eine Optimierung zu erhalten.
 
 \section{Zielsetzung - Zieldefinition 1RTT}
 
 \section{Lösungsvarianten}
-Nachdem unser Ziel definiert wurde, kümmern wir uns um die Wege, wie wir das Ziel Paket-Recovery innerhalb einer RTT. Hierzu wurden im Paper \cite{} die drei Ansätze \textit{Reactive}, \textit{Corrective} und \textit{Proactive} vorgestellt. Der \textit{Reactive} Ansatz sendet das letzte Paket in einem neuen Window. E
+Nachdem unser Ziel definiert wurde, kümmern wir uns um die Wege, wie wir das Ziel Paket-Recovery innerhalb einer RTT. Hierzu wurden im Paper \cite{} die drei Ansätze \textit{Reactive}, \textit{Corrective} und \textit{Proactive} vorgestellt. Der \textit{Reactive} beugt dem Problem des nicht erhaltenen ACKs vor indem es mehrere ACK Pakete zum Empfänger schickt. Somit ist die Wahrscheinlichkeit höher, dass der Empfänger eines dieser Pakete erhält und damit bestätigen kann. Der Corrective Ansatz versendet direkt mehrere Pakete. Durch diese Redundanz soll sichergestellt werden, dass die Pakete bei Verlust im Notfall beim Empfänger aus den vorhandenen Informationen wiederhergestellt werden. Die Proactive Lösung geht den krassesten Weg und versendet zu 100 Prozent redundant seine Daten. Somit wird das Paket doppelt aufgebläht. Wie die drei Ansätze im Detail funktionieren, wird in den folgenden Abschnitten behandelt.
 \subsection{Reactive}
 Lösungsansatz beschreiben
 \subsection{Corrective}
@@ -125,127 +125,10 @@ Lösungsansatz beschreiben
 Lösungsansatz beschreiben
 
 \section{Lösungsbewertung anhand von Vor-und Nachteilen}
+Gegenüberstellung mit einer Tabelle
+\section{Ausblick und Fazit}
+Verweis auf die anderen Lösungsansätze bringen sowie ein endgültiges Fazit der Sache bringen.
 
-\section{Fazit}
-%Und nun ein Bild:
-% Hinweis: der Text in der Abbildung sollte nicht größer als die
-% Schriftgröße des Fließtextes (11pt) sein und möglichst mit 
-% serifenlosen Font (Helvetica, Arial).
-% Einfach mit Dateiname (ohne Endung), Label, Bildunterschrift
-% \Abbildung{t01_b01}{t01_Bild1}{Ich bin die Bildunterschrift.}
-% oder spezifischer mit
-%\Abbildungf{!htb}{width= 0.8\textwidth}{t01_b01}{t01_Bild1}{Ich bin die Bildunterschrift.}
-% oder "von Hand" 
-% (z.B. mit Skalierung auf 80% Textbreite in horizontaler Richtung):
-%
-%\begin{figure}[htb] 
-%\centerline{\includegraphics*[width=0.8\textwidth]{dateiname}}} 
-%\caption{Dies ist die Bildunterschrift} 
-%\label{t01_Bild}
-%\end{figure}
-%
-% Für pdflatex werden die Bilddateien als PDF benötigt (z.B. mit epstopdf
-% oder Acrobat Distiller wandeln), deshalb keine Endung mit angeben!
-
-Umlaute gibt es auch: ä, ö, ü, Ä, Ö, Ü, ß. Alternativ kann man notfalls 
-auch "a,"o,"o,"A,"O,"U,"s eingeben. Die Umlaute werden nach ISO 8859-1
-codiert. Eingabemöglichkeiten im \texttt{emacs} wie folgt:
-\begin{enumerate}
-\item
-Wenn keine Umlaute auf der Tastatur vorhanden sind, kann man 
-z.B. mit folgender Tastenkombination (Tasten nacheinander drücken)
-ein ä erzeugen: \fbox{\parbox{1.05cm}{\tiny compose\\ character}}
-dann \fbox{\"{}} dann \fbox{a}.
-% Im Klartext: [compose character] ["] [a]
-\item
-Einfacher geht's jedoch mit dem \emph{iso-accents-mode} des
-\texttt{emacs}: Einfach \fbox{\"{}} gefolgt von \fbox{a}
-drücken.
-% Im Klartext: ["] [a]
-\end{enumerate}
-
-Nun einen Verweis auf eine Literaturstelle: \cite{t01_buch1}.
-Die Literatur ist in der BIB\TeX-Datei einzugeben (Endung \texttt{.bib}).
-Es wird sämtliche dort eingegebene Literatur auch aufgeführt
-(d.h. auch die Werke, die nicht referenziert wurden). Der Editor
-\texttt{emacs} unterstützt die Eingabe im BIB\TeX-Format (nach
-Laden einer Datei mit Endung \texttt{.bib}).
-
-
-Als nächstes präsentieren wir eine Aufzählung:
-\begin{itemize}
-\item Punkt1\\
-      Eine Formel (nicht numeriert): 
-      \[ \frac{1}{n} \cdot \sum_{i=1}^{n}{(\overline{x}-x_i)^2} \]
-\item Punkt2
-\item Punkt3
-\end{itemize}
-
-Man kann übrigens auch Bilder referenzieren: Bild~\ref{t01_Bild1} oder
-Unterabschnitte wie z.B. den nächsten Unterabschnitt~\ref{t01_Unterabschnitt}.
-URLs lassen sich so angeben: \urltext{http://www.uni-karlsruhe.de/} oder
-explizit \href{http://www.uni-karlsruhe.de/}{Universität Karlsruhe (TH)}
-(dann erscheint die URL nicht als zwangsweise im Text).
-
-\subsection{Unterabschnitt}
-\label{t01_Unterabschnitt}
-Dies ist ein Unterabschnitt. Mit \LaTeX\ kann man auch prima Tabellen (siehe
-Beispieltabelle~\ref{t01_tabelle}) erzeugen:
-\begin{table}[!htb] % das ! vor dem h heißt, dass LaTeX versucht, das "Gleitobjekt" 
-                    % wirklich hier zu plazieren
-\begin{center} % Zentrieren der Tabelle
-\begin{tabular}{|l||c|r|p{6.5cm}|}
-\hline
-\multicolumn{4}{|c|}{Beispieltabelle} \\
-\hline
-\hline
-Spalte 1       &    Spalte 2     &      Spalte 3     &        Spalte4 \\
-\hline
-linksbündig    & zentriert       & rechtsbündig      & 6.5cm breit, Fließtext
-                                                       ist möglich, d.h. der Text
-                                                       wird automatisch umgebrochen,
-                                                       allerdings im Blocksatz gesetzt.\\
-\hline
-               & \multicolumn{2}{c|}
-                 {Ein Eintrag über Spalte 2--3}      & Es gibt auch die Möglichkeit
-                                                       Flattersatz in Spalten einzusetzen.
-                                                       Das eignet sich besonders für kurze
-                                                       Spalten. Auch grau unterlegte 
-                                                       Tabellenzeilen oder Tabellen über
-                                                       mehrere Seiten sind möglich.\\
-\hline
-Man            &                 &                   &                          \\
-kann auch      & horizontale     & Linien            & einfach weglassen. \\
-\hline
-\end{tabular}
-\end{center}
-\caption{Beispiel einer Tabelle\label{t01_tabelle}}
-\end{table}
-%%
-Ich bin der Beispieltext und habe eine Referenz auf Abschnitt~\ref{t01_Einleitung}. 
-Verschiedene Schriftgrößen wie {\small small}, {\footnotesize footnotesize} und
-Stile \emph{hervorgehobener Text}, \textit{kursiv}, \textsl{schräggestellt} (anders
-als kursiv), \textbf{Fettdruck} (sollte \emph{nicht} verwendet werden).
-Text in Anführungszeichen sieht so aus: "`korrekt"'.
-% Für Flattersatz in Tabellenspalten:
-% \newcolumntype{z}{>{\PBS{\raggedright\hspace{0pt}}}p{5cm}}
-% statt p{5cm} einfach z verwenden, z.B. \begin{tabular}{|l||c|r|z|}
-% Für graue Tabellenspalten (z.B. zentrierter Text):
-% \newcolumntype{g}{>{\columncolor[gray]{0.8}}c} % grau
-% \newcolumntype{G}{>{\columncolor[gray]{0.9}}c} % helleres grau
-% \begin{tabular}{|l||c|G|g|} oder auch \multicolumn{4}{|g|}{Eine ganze Zeile}
-% Aber Achtung: Im xdvi werden graue Zeilen nicht korrekt dargestellt, erst
-% im PostScript- oder PDF-Dokument bzw. Ghostview.
-%
-% /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ /\ 
-% -----------------------------------------------------------------------------
-% Bitte keinen Text mehr unterhalb dieser Zeile eintragen!!
-% -----------------------------------------------------------------------------
-%
-% --> Üblicherweise wird nur die Literatur aufgelistet, die auch referenziert
-%     wird. Möchte man auch nichtreferenzierte Literatur einschließen, so
-%     kann man dies mit \nocite{<citelabel>} tun.
-\nocite{*}
 %     In die folgende Zeile sollte die benötigte Literaturdatenbankdatei
 %     eingetragen werden (im Normalfall nicht zu ändern):
 \bibliography{t08_txt}
