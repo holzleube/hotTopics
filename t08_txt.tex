@@ -121,8 +121,8 @@ Weitere Ergebnisse der Messung von Google zeigen, dass die meisten Verluste in d
 \label{googleImage}
 \end{figure}
 \section{Zielsetzung - Zieldefinition 1RTT}
+Das Ziel, worauf wir in dieser Arbeit hinarbeiten wollen soll sich am Ideal von einer Retransmission Time orientieren. Dies bedeutet, dass bei einem Paketverlust nur eine erneute Übertragung notwendig ist. Die Web Latenz soll sich dann auf eine RTT abgeschlossen sein. 
 
-Zielsetzung des Papers erläutern
 \section{Lösungsvarianten}
 Nachdem unser Ziel definiert wurde, kümmern wir uns um die Wege, wie wir das Ziel Paket-Recovery innerhalb einer RTT. Hierzu wurden im Paper \cite{} die drei Ansätze \textit{Reactive}, \textit{Corrective} und \textit{Proactive} vorgestellt. Der \textit{Reactive} beugt dem Problem des nicht erhaltenen ACKs vor indem es mehrere ACK Pakete zum Empfänger schickt. Somit ist die Wahrscheinlichkeit höher, dass der Empfänger eines dieser Pakete erhält und damit bestätigen kann. Der Corrective Ansatz versendet direkt mehrere Pakete. Durch diese Redundanz soll sichergestellt werden, dass die Pakete bei Verlust im Notfall beim Empfänger aus den vorhandenen Informationen wiederhergestellt werden. Die Proactive Lösung geht den krassesten Weg und versendet zu 100 Prozent redundant seine Daten. Somit wird das Paket doppelt aufgebläht. Wie die drei Ansätze im Detail funktionieren, wird in den folgenden Abschnitten behandelt.
 
