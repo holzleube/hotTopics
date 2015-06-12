@@ -1,0 +1,13 @@
+\begin{thebibliography}{TFGo13}
+
+\bibitem[Laem]{t08_RTO}
+Philipp Laemmel.
+\newblock Der Retransmission Timeout von TCP.
+
+\bibitem[TFGo13]{t08_WEB}
+Andreas Terzis Barath Raghavan Neal Cardwell Yuchung Cheng Ankur Jain Shuai Hao
+  Ethan Katz-Bassett Tobias~Flach, Nandita~Dukkipati und Ramesh Govindan.
+\newblock Reducing Web Latency: the Virtue of Gentle Aggression.
+\newblock 2013.
+
+\end{thebibliography}

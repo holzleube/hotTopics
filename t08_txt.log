@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.6.12)  12 JUN 2015 15:10
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.3)  12 JUN 2015 21:17
 entering extended mode
 **t08_txt.tex
-(D:\Projekte\HTON\t08_txt.tex
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.tex"
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -13,7 +13,7 @@ german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
 ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
-(D:\Projekte\HTON\semdoc.cls
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\semdoc.cls"
 Document Class: semdoc 2000/05/22 Seminarbeitrag
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
@@ -93,7 +93,7 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\ae\t1aer.fd"
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-(D:\Projekte\HTON\vmargin.sty
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\vmargin.sty"
 Package: vmargin 1999/06/01
 
 Package `vmargin', V2.2, <1999/06/01>
@@ -114,8 +114,8 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \extratabsurround=\skip43
 \backup@length=\skip44
 )
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\colortbl\colortbl.sty"
-Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\colortbl.sty"
+Package: colortbl 1996/10/12 v0.1g Color table columns (DPC)
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\color.sty"
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
@@ -269,7 +269,7 @@ Package: thumbpdf 2012/04/18 v3.15 Inclusion of thumbnails (HO)
 
 Package thumbpdf Warning: Thumbnail data file `t08_txt.tpt' not found.
 
-)) (D:\Projekte\HTON\t08_txt.aux)
+)) ("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.aux")
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 7.
@@ -313,7 +313,8 @@ LaTeX Info: Redefining \ref on input line 7.
 LaTeX Info: Redefining \pageref on input line 7.
 LaTeX Info: Redefining \nameref on input line 7.
 
-(D:\Projekte\HTON\t08_txt.out) (D:\Projekte\HTON\t08_txt.out)
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.out")
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.out")
 \@outlinefile=\write3
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 25.
@@ -329,82 +330,70 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <9> on input line 85.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 85.
-
-LaTeX Warning: Citation `t08_WEB' on page 1 undefined on input line 85.
-
 [1
 
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
-<t08_tcpHeader.png, id=70, 725.109pt x 390.258pt>
+<t08_tcpHeader.png, id=67, 725.109pt x 390.258pt>
 File: t08_tcpHeader.png Graphic file (type png)
  <use t08_tcpHeader.png>
-Package pdftex.def Info: t08_tcpHeader.png used on input line 104.
+Package pdftex.def Info: t08_tcpHeader.png used on input line 106.
 (pdftex.def)             Requested size: 353.32767pt x 190.16217pt.
 
-[2] [3 <D:/Projekte/HTON/t08_tcpHeader.png>]
-<t08_google.png, id=84, 398.6895pt x 213.1965pt>
+[2] [3 <C:/Users/Dane/OneDrive/KIT/Hot Topics on Networking/Repo/t08_tcpHeader.
+png>] <t08_google.png, id=81, 398.6895pt x 213.1965pt>
 File: t08_google.png Graphic file (type png)
  <use t08_google.png>
-Package pdftex.def Info: t08_google.png used on input line 123.
+Package pdftex.def Info: t08_google.png used on input line 125.
 (pdftex.def)             Requested size: 353.32767pt x 188.9375pt.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Citation `t08_WEB' on page 4 undefined on input line 124.
-
-
-LaTeX Warning: Citation `t08_WEB' on page 4 undefined on input line 124.
-
-[4 <D:/Projekte/HTON/t08_google.png>]
-<t08_Reactive.pdf, id=91, 597.50786pt x 845.04686pt>
+ [4 <C:/Users/Dane/OneDrive/KIT/Hot Topics on Networking/Repo/t08_google.png>]
+<t08_Reactive.pdf, id=92, 597.50786pt x 845.04686pt>
 File: t08_Reactive.pdf Graphic file (type pdf)
  <use t08_Reactive.pdf>
-Package pdftex.def Info: t08_Reactive.pdf used on input line 135.
+Package pdftex.def Info: t08_Reactive.pdf used on input line 137.
 (pdftex.def)             Requested size: 176.66046pt x 249.84113pt.
 
-<t08_Corrective.pdf, id=93, 597.50786pt x 845.04686pt>
+<t08_Corrective.pdf, id=95, 597.50786pt x 845.04686pt>
 File: t08_Corrective.pdf Graphic file (type pdf)
 
 <use t08_Corrective.pdf>
-Package pdftex.def Info: t08_Corrective.pdf used on input line 143.
+Package pdftex.def Info: t08_Corrective.pdf used on input line 146.
 (pdftex.def)             Requested size: 176.66046pt x 249.84113pt.
- [5]
-
-LaTeX Warning: Citation `t08_WEB' on page 6 undefined on input line 149.
-
-[6 <D:/Projekte/HTON/t08_Reactive.pdf>]
-<t08_Proactive.pdf, id=122, 597.50786pt x 845.04686pt>
+ [5] [6 <C:/Users/Dane/OneDrive/KIT/Hot Topics on Networking/Repo/t08_Reactive.
+pdf>]
+<t08_Proactive.pdf, id=127, 597.50786pt x 845.04686pt>
 File: t08_Proactive.pdf Graphic file (type pdf)
  <use t08_Proactive.pdf>
-Package pdftex.def Info: t08_Proactive.pdf used on input line 153.
+Package pdftex.def Info: t08_Proactive.pdf used on input line 156.
 (pdftex.def)             Requested size: 176.66046pt x 249.84113pt.
 
-[7 <D:/Projekte/HTON/t08_Corrective.pdf>] [8 <D:/Projekte/HTON/t08_Proactive.pd
-f>] [9]
-No file t08_txt.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 178.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 178.
-(D:\Projekte\HTON\t08_txt.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 178.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 178.
+[7 <C:/Users/Dane/OneDrive/KIT/Hot Topics on Networking/Repo/t08_Corrective.pdf
+>] [8 <C:/Users/Dane/OneDrive/KIT/Hot Topics on Networking/Repo/t08_Proactive.p
+df>] [9] [10]
+("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.bbl")
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 182.
+
+[11
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 182.
+ ("C:\Users\Dane\OneDrive\KIT\Hot Topics on Networking\Repo\t08_txt.aux")
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 182.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 182.
 Package rerunfilecheck Info: File `t08_txt.out' has not changed.
-(rerunfilecheck)             Checksum: 13CD28D304040FF16DBCA4ED0A82C6FB;818.
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 178.
+(rerunfilecheck)             Checksum: 89CCF71DB4C6AE1053AACBFBD1A0D5F2;757.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 182.
  ) 
 Here is how much of TeX's memory you used:
- 5888 strings out of 493921
- 84925 string characters out of 3144861
- 170256 words of memory out of 3000000
- 9054 multiletter control sequences out of 15000+200000
- 36098 words of font info for 70 fonts, out of 3000000 for 9000
+ 5883 strings out of 493921
+ 85573 string characters out of 3144880
+ 171346 words of memory out of 3000000
+ 9049 multiletter control sequences out of 15000+200000
+ 32954 words of font info for 64 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 41i,8n,28p,2057b,331s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,8n,28p,2117b,350s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 <C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C
 :/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/P
@@ -412,9 +401,9 @@ rogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Progr
 am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program F
 iles (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on t08_txt.pdf (9 pages, 229121 bytes).
+Output written on t08_txt.pdf (11 pages, 233181 bytes).
 PDF statistics:
- 206 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 160 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 33 named destinations out of 1000 (max. 500000)
+ 152 words of extra memory for PDF output out of 10000 (max. 10000000)
 
