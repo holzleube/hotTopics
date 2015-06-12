@@ -16,7 +16,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="Zeichnung.svg">
+   sodipodi:docname="Proactive.svg">
   <title
      id="title3363">Reactive Ansatz</title>
   <defs
@@ -95,24 +95,24 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="38.385796"
-       y="110.90003"
+       y="136.90002"
        id="text3355"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3357"
          x="38.385796"
-         y="110.90003">Sender</tspan></text>
+         y="136.90002">Sender</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="503.056"
-       y="108.87973"
+       y="134.87973"
        id="text3359"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3361"
          x="503.056"
-         y="108.87973">Empfänger</tspan></text>
+         y="134.87973">Empfänger</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 107.07617,278.58536 478.81231,48.48732"
@@ -136,35 +136,19 @@
          id="tspan3375"
          x="222.23357"
          y="264.44321">Daten Paket</tspan></text>
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 103.03556,415.9661 480.83261,50.50763"
-       id="path3377"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 94.954339,442.23007 585.88848,494.758"
-       id="path3398"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 94.954339,480.61586 585.88848,529.10319"
-       id="path3400"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="218.19295"
-       y="387.68182"
+       style="font-style:normal;font-weight:normal;font-size:49.67012405px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="214.46521"
+       y="303.46893"
        id="text3402"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.79151138,1.2634057)"><tspan
          sodipodi:role="line"
          id="tspan3404"
-         x="218.19295"
-         y="387.68182">Probe Pakete</tspan></text>
+         x="214.46521"
+         y="303.46893"
+         style="font-size:34.14820862px">Redundantes Daten Paket</tspan></text>
     <flowRoot
        xml:space="preserve"
        id="flowRoot3406"
@@ -175,28 +159,10 @@
            height="54.548237"
            x="195.96959"
            y="615.97632" /></flowRegion><flowPara
-         id="flowPara3412"></flowPara></flowRoot>    <path
+         id="flowPara3412" /></flowRoot>    <path
        style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 591.94939,587.69203 101.01525,662.44332"
        id="path3422"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 593.9697,632.13875 90.913729,710.93064"
-       id="path3424"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 598.01031,670.52454 88.893424,747.29614"
-       id="path3426"
-       inkscape:connector-type="polyline"
-       inkscape:connector-curvature="3" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 598.01031,700.82912 -496.99506,80.8122"
-       id="path3428"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="3" />
     <text
@@ -209,6 +175,34 @@
          sodipodi:role="line"
          id="tspan3404-2"
          x="219.38464"
-         y="602.58459">ACK Pakete</tspan></text>
+         y="602.58459">ACK Paket</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="167.87724"
+       y="65.183441"
+       id="text3355-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3357-0"
+         x="167.87724"
+         y="65.183441"> Proactive Ansatz</tspan></text>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 593.96969,686.13875 94.954339,768.97126"
+       id="path3359"
+       inkscape:connector-type="polyline"
+       inkscape:connector-curvature="3" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="215.74139"
+       y="699.55927"
+       id="text3402-8-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3404-2-0"
+         x="215.74139"
+         y="699.55927">ACK Paket</tspan></text>
   </g>
 </svg>
